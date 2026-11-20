@@ -52,10 +52,11 @@ El `.exe` **no** va en el repo (113 MB). Se sube a una Releases:
 gh release create v1.0 downloads/TurboxClipsPro.exe --title "TurboxClipsPro 1.0" --generate-notes
 ```
 
-La URL de descarga será:
+La URL de descarga ya publicada es:
 ```
-https://github.com/TU-USUARIO/turboxclipspro/releases/download/v1.0/TurboxClipsPro.exe
+https://github.com/lordtrvr/turboxclipspro/releases/download/v1.0/TurboxClipsPro.exe
 ```
+SHA256 verificado: `6F42C00AD50B2CF128F6A345C65C33138CD890357AC2BDD0CC4A21D005D009B7`
 
 ---
 

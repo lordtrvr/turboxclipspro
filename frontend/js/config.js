@@ -5,7 +5,7 @@
 const API_BASE = '';
 
 // URL pública del instalador Windows (GitHub Releases).
-const DOWNLOAD_URL = '/downloads/TurboxClipsPro.exe';
+const DOWNLOAD_URL = 'https://github.com/lordtrvr/turboxclipspro/releases/download/v1.0/TurboxClipsPro.exe';
 
 // Número de WhatsApp (con código de país, sin +)
 const ADMIN_WHATSAPP = '18293670355';

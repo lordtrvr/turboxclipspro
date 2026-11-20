@@ -1,0 +1,2 @@
+# Intencionalmente vacio: las dependencias del backend estan en backend/requirements.txt.
+# Este archivo existe solo para que Netlify no falle el paso "Install dependencies".

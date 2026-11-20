@@ -128,11 +128,16 @@ Editar `frontend/js/config.js`:
 
 ```js
 const API_BASE = 'https://turboxclipspro-api.onrender.com';
-const DOWNLOAD_URL = 'https://github.com/TU-USUARIO/turboxclipspro/releases/download/v1.0/TurboxClipsPro.exe';
+const DOWNLOAD_URL = 'https://github.com/lordtrvr/turboxclipspro/releases/download/v1.0/TurboxClipsPro.exe';
 ```
 
+URLs reales:
+- Frontend: https://turboxclipspro.netlify.app
+- Backend: https://turboxclipspro-api.onrender.com
+- Admin: https://turboxclipspro-api.onrender.com/admin?key=YuhrXmPsfM9kPqg3BKxYhjWf2S8NFfrlEoIuDKsm
+
 Hacer commit y push. Netlify y Render se actualizan solos.
-Actualizar también `FRONTEND_URL` en Render con la URL de Netlify.
+Actualizar también `FRONTEND_URL` y `APP_URL` en Render con las URLs reales.
 
 ---
 

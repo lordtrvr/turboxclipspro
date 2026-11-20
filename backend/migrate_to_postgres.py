@@ -56,5 +56,15 @@ with PgSession() as db:
         db.commit()
         print("Migrado:", data["email"])
 
+# Tras insertar IDs explicitos, la secuencia debe quedar en el maximo para
+# que los nuevos registros no choquen con "duplicate key value violates unique constraint".
+with pg_engine.begin() as _conn:
+    _seq = _conn.exec_driver_sql("SELECT pg_get_serial_sequence('users', 'id')").scalar()
+    if _seq:
+        _max = _conn.exec_driver_sql("SELECT COALESCE(MAX(id), 1) FROM users").scalar()
+        _last = _conn.exec_driver_sql(f"SELECT last_value FROM {_seq}").scalar()
+        _conn.exec_driver_sql(f"SELECT setval('{_seq}', {max(int(_max or 1), int(_last or 1))})")
+        print("Secuencia sincronizada:", _seq)
+
 local.close()
 print("LISTO: migracion terminada")

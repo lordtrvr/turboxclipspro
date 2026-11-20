@@ -27,6 +27,16 @@ engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread":
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(bind=engine)
 
+# Sincroniza la secuencia de IDs en PostgreSQL tras migraciones con IDs explícitos.
+if "postgresql" in settings.DATABASE_URL:
+    with engine.begin() as _conn:
+        _seq = _conn.exec_driver_sql("SELECT pg_get_serial_sequence('users', 'id')").scalar()
+        if _seq:
+            _max = _conn.exec_driver_sql("SELECT COALESCE(MAX(id), 1) FROM users").scalar()
+            _last = _conn.exec_driver_sql(f"SELECT last_value FROM {_seq}").scalar()
+            _target = max(int(_max or 1), int(_last or 1))
+            _conn.exec_driver_sql(f"SELECT setval('{_seq}', {_target})")
+
 # Migración ligera (solo SQLite; PostgreSQL ya crea la columna con create_all).
 if "sqlite" in settings.DATABASE_URL:
     with engine.begin() as _conn:

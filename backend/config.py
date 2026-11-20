@@ -18,6 +18,12 @@ class Settings(BaseSettings):
     RESEND_API_KEY: Optional[str] = None
     RESEND_FROM: Optional[str] = None
 
+    # Gmail API (HTTPS - envia desde tu correo real a cualquier destinatario)
+    GMAIL_CLIENT_ID: Optional[str] = None
+    GMAIL_CLIENT_SECRET: Optional[str] = None
+    GMAIL_REFRESH_TOKEN: Optional[str] = None
+    GMAIL_SENDER: str = "turboxclips@gmail.com"
+
     APP_NAME: str = "TurboxClipsPro"
     APP_URL: str = "http://localhost:8000"
     DOWNLOAD_URL: str = "/downloads/TurboxClipsPro.exe"

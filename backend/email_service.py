@@ -14,7 +14,11 @@ def _send_via_resend(to_email: str, subject: str, body: str) -> bool:
     api_key = getattr(settings, "RESEND_API_KEY", None)
     if not api_key:
         return False
-    from_email = getattr(settings, "RESEND_FROM", None) or "TurboxClipsPro <onboarding@resend.dev>"
+    from_email = getattr(settings, "RESEND_FROM", None) or "onboarding@resend.dev"
+    # Con el dominio de prueba resend.dev, Resend exige el from EXACTO
+    # "onboarding@resend.dev" (sin nombre). Cualquier otro valor da error 1010.
+    if "resend.dev" in from_email or not from_email:
+        from_email = "onboarding@resend.dev"
     payload = {
         "from": from_email,
         "to": [to_email],

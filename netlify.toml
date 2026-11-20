@@ -1,0 +1,16 @@
+[build]
+  publish = "frontend"
+  command = ""
+
+# El backend local monta los archivos en /static. En Netlify los reescribimos
+# a la ruta real dentro de frontend/ (css, js, media, avatars).
+[[redirects]]
+  from = "/static/*"
+  to = "/:splat"
+  status = 200
+
+# Rutas de la app (/, /login, /register, /verify, /dashboard)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

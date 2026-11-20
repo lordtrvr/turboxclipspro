@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurboxClipsPro — Clips virales automáticos</title>
+<meta name="description" content="Genera clips virales de tus streams automáticamente. Transcripción palabra por palabra, detección de momentos virales, subtítulos animados y edición profesional.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<a href="https://t.me/kodacodeo" target="_blank" rel="noopener" class="support-tab" aria-label="Soporte por Telegram">
+  <svg class="support-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 14a2 2 0 0 0-2 2v2a2 2 0 0 1-2 2h-2"/><rect x="2" y="14" width="5" height="6" rx="2"/><rect x="17" y="14" width="5" height="6" rx="2"/></svg>
+  <span>Soporte</span>
+</a>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <span class="logo-icon">🎬</span>
+      <span class="logo-text">Turbox<span class="logo-accent">Clips</span>Pro</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Funciones</a>
+      <a href="#pricing">Precios</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-actions" id="navActions">
+      <a href="/login" class="btn btn-ghost" data-auth="guest">Iniciar sesión</a>
+      <a href="/register" class="btn btn-primary" data-auth="guest">Crear cuenta</a>
+      <span class="nav-user" data-auth="user" style="display:none;color:var(--text-muted);font-size:0.9rem;">Hola, <b id="navUserName">...</b></span>
+      <a href="/dashboard" class="btn btn-ghost" data-auth="user" style="display:none;">Mi cuenta</a>
+      <button id="navLogoutBtn" class="btn btn-ghost" data-auth="user" style="display:none;">Cerrar sesión</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="tg-chat-layer" id="tgChatLayer" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-animate="fade-up">
+      <span class="badge-dot"></span>
+      Nuevo: Editor profesional con IA
+    </div>
+    <h1 data-animate="fade-up" data-delay="100">
+      Convierte tus streams en<br>
+      <span class="gradient-text">clips virales</span> automáticamente
+    </h1>
+    <p class="hero-sub" data-animate="fade-up" data-delay="200">
+      Transcripción palabra por palabra, detección de momentos virales, subtítulos animados y un editor profesional. Todo en tu PC, sin subir nada a la nube.
+    </p>
+    <div class="hero-cta" data-animate="fade-up" data-delay="300">
+      <a href="/register" class="btn btn-primary btn-lg">
+        Empezar gratis
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#features" class="btn btn-ghost btn-lg">Ver funciones</a>
+    </div>
+    <div class="hero-stats" data-animate="fade-up" data-delay="400">
+      <div class="stat"><b>8+</b><span>Clips por video</span></div>
+      <div class="stat"><b>1080p</b><span>Calidad HD</span></div>
+      <div class="stat"><b>100%</b><span>Local y privado</span></div>
+    </div>
+  </div>
+  <div class="hero-visual" data-animate="fade-left" data-delay="200">
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <div class="phone-video-track" id="phoneVideoTrack">
+          <video class="phone-video is-active" src="/static/media/rdjavi.mp4" muted playsinline preload="auto"></video>
+          <video class="phone-video" src="/static/media/clip-mg-surprise.mp4" muted playsinline preload="metadata"></video>
+          <video class="phone-video" src="/static/media/clip-flashbacks.mp4" muted playsinline preload="metadata"></video>
+          <video class="phone-video" src="/static/media/clip-gabi-hill.mp4" muted playsinline preload="metadata"></video>
+          <video class="phone-video" src="/static/media/clip-frase-malientelica.mp4" muted playsinline preload="metadata"></video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="features">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-tag">Funciones</span>
+      <h2>Todo lo que necesitas para crear clips virales</h2>
+      <p>Automatiza el proceso completo: desde la descarga hasta la exportación final.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" data-animate="fade-up" data-delay="0">
+        <div class="feature-icon">🎯</div>
+        <h3>Detección de momentos virales</h3>
+        <p>IA analiza tu stream y encuentra los momentos más emocionantes, divertidos y virales automáticamente.</p>
+      </div>
+      <div class="feature-card" data-animate="fade-up" data-delay="100">
+        <div class="feature-icon">📝</div>
+        <h3>Subtítulos animados</h3>
+        <p>Transcripción palabra por palabra con 10 temas y 8 animaciones. Edita cualquier palabra manualmente.</p>
+      </div>
+      <div class="feature-card" data-animate="fade-up" data-delay="200">
+        <div class="feature-icon">✂️</div>
+        <h3>Editor profesional</h3>
+        <p>Corta, pega, zoom, overlays, música, transiciones, avatar con voz IA. Todo en una línea de tiempo.</p>
+      </div>
+      <div class="feature-card" data-animate="fade-up" data-delay="300">
+        <div class="feature-icon">📱</div>
+        <h3>Formato vertical 9:16</h3>
+        <p>Cámara arriba + gameplay abajo. Detección automática de webcam. Sin barras negras.</p>
+      </div>
+      <div class="feature-card" data-animate="fade-up" data-delay="400">
+        <div class="feature-icon">🔒</div>
+        <h3>100% local y privado</h3>
+        <p>Todo se procesa en tu PC. No subimos tus videos a ningún servidor. Tu contenido es tuyo.</p>
+      </div>
+      <div class="feature-card" data-animate="fade-up" data-delay="500">
+        <div class="feature-icon">🎙️</div>
+        <h3>Whisper local</h3>
+        <p>Transcripción con IA en tu propia máquina. Sin límites de uso, sin costos por minuto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-tag">Precios</span>
+      <h2>Suscripción mensual</h2>
+      <p>$10.99 USD al mes. Cancela cuando quieras. Sin compromisos.</p>
+    </div>
+    <div class="pricing-grid pricing-single">
+      <div class="pricing-card featured" data-animate="fade-up" data-delay="0">
+        <div class="pricing-badge">Suscripción mensual</div>
+        <div class="pricing-header">
+          <h3>TurboxClipsPro — Acceso completo</h3>
+          <div class="price">$10.99<span> /mes</span></div>
+          <p class="price-desc">Suscripción mensual. Cancela cuando quieras.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ Clips automáticos con IA</li>
+          <li>✓ Detección de momentos virales</li>
+          <li>✓ Subtítulos animados (10 temas, 8 animaciones)</li>
+          <li>✓ Transcripción palabra por palabra (Whisper local)</li>
+          <li>✓ Editor profesional completo</li>
+          <li>✓ Overlays, música, transiciones</li>
+          <li>✓ Avatar con voz IA</li>
+          <li>✓ Formato vertical 9:16 (cámara arriba + gameplay abajo)</li>
+          <li>✓ Exportación por calidad (HD / Full HD / 2K / 4K)</li>
+          <li>✓ Grabación de directos</li>
+          <li>✓ Mejora automática de video</li>
+          <li>✓ 100% local y privado (sin subir videos a la nube)</li>
+          <li>✓ Sin límites de uso, sin costos por minuto</li>
+          <li>✓ Actualizaciones incluidas</li>
+          <li>✓ Soporte por WhatsApp</li>
+          <li>✓ Acceso completo mientras esté activa la suscripción</li>
+        </ul>
+        <a href="https://wa.me/18293670355?text=Hola,%20quiero%20suscribirme%20a%20TurboxClipsPro%20por%20%2410.99%20USD%20al%20mes" class="btn btn-primary btn-block btn-lg" target="_blank">Suscribirme por WhatsApp (+1 829 367-0355)</a>
+      </div>
+    </div>
+    <div class="pricing-community" data-animate="fade-up">
+      <a href="https://t.me/+nrGlDhQxciBmNmQx" target="_blank" rel="noopener" class="btn btn-telegram btn-sm">
+        <svg class="tg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.82-6.09c.73-.33 1.43.15 1.18 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        Únete a la comunidad
+      </a>
+      <p class="pricing-note">El pago mensual se coordina por WhatsApp. Una vez confirmado el pago, recibirás acceso completo al programa.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-tag">FAQ</span>
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item" data-animate="fade-up">
+        <button class="faq-q">¿Necesito internet para usar el programa?</button>
+        <div class="faq-a">No. Una vez descargado, todo se procesa localmente en tu PC. Solo necesitas internet para descargar videos de YouTube/Kick y para verificar la licencia.</div>
+      </div>
+      <div class="faq-item" data-animate="fade-up">
+        <button class="faq-q">¿Mis videos se suben a algún servidor?</button>
+        <div class="faq-a">No. Todo el procesamiento es 100% local. Tus videos nunca salen de tu computadora.</div>
+      </div>
+      <div class="faq-item" data-animate="fade-up">
+        <button class="faq-q">¿Qué necesito para que funcione?</button>
+        <div class="faq-a">Windows 10/11, 8 GB de RAM (16 GB recomendado), y una GPU NVIDIA opcional para acelerar la transcripción. El instalador incluye todo lo necesario.</div>
+      </div>
+      <div class="faq-item" data-animate="fade-up">
+        <button class="faq-q">¿Puedo usarlo con videos ya grabados?</button>
+        <div class="faq-a">Sí. Puedes subir cualquier video (MP4, MKV, etc.) o pegar la URL de un video de YouTube, Kick, Twitch, etc.</div>
+      </div>
+      <div class="faq-item" data-animate="fade-up">
+        <button class="faq-q">¿Cómo recibo mi licencia?</button>
+        <div class="faq-a">Después de coordinar el pago por WhatsApp, te enviamos tu key de licencia. La ingresas en el programa y queda activada de por vida.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box" data-animate="fade-up">
+      <h2>¿Listo para crear clips virales?</h2>
+      <p>Únete a cientos de streamers que ya usan TurboxClipsPro.</p>
+      <a href="/register" class="btn btn-primary btn-lg">Crear cuenta gratis</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo-icon">🎬</span>
+        <span>TurboxClipsPro</span>
+      </div>
+      <div class="footer-links">
+        <a href="#features">Funciones</a>
+        <a href="#pricing">Precios</a>
+        <a href="#faq">FAQ</a>
+        <a href="/login">Iniciar sesión</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 TurboxClipsPro. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/app.js"></script>
+<script>
+// Carrusel del telefono: un clip a la vez, en orden, durante toda su duracion.
+(function(){
+  var vids = Array.prototype.slice.call(document.querySelectorAll('#phoneVideoTrack .phone-video'));
+  if (!vids.length) return;
+
+  var idx = 0;
+  var busy = false;
+  var safety = null;
+  var TRANSITION = 700; // coincide con la transicion del CSS
+
+  function resetTimers(){
+    if (safety) { clearTimeout(safety); safety = null; }
+  }
+
+  function playVideo(v){
+    v.muted = true;
+    v.playsInline = true;
+    v.loop = false;
+    try { v.currentTime = 0; } catch (e) {}
+    var p = v.play();
+    if (p && typeof p.catch === 'function') p.catch(function(){});
+  }
+
+  function armSafety(v){
+    resetTimers();
+    var d = (isFinite(v.duration) && v.duration > 0) ? v.duration : 6;
+    safety = setTimeout(function(){
+      if (!busy && vids[idx] === v) next();
+    }, (d + 0.4) * 1000);
+  }
+
+  function activate(nextIndex){
+    if (busy || nextIndex === idx) return;
+    busy = true;
+    resetTimers();
+
+    var current = vids[idx];
+    var incoming = vids[nextIndex];
+
+    incoming.classList.add('is-active');
+    playVideo(incoming);
+    current.classList.add('is-leaving');
+    current.classList.remove('is-active');
+
+    setTimeout(function(){
+      current.pause();
+      try { current.currentTime = 0; } catch (e) {}
+      current.classList.remove('is-leaving');
+      idx = nextIndex;
+      busy = false;
+      armSafety(incoming);
+    }, TRANSITION);
+  }
+
+  function next(){
+    if (busy) return;
+    activate((idx + 1) % vids.length);
+  }
+
+  vids.forEach(function(v){
+    v.muted = true;
+    v.playsInline = true;
+    v.loop = false;
+    v.addEventListener('ended', function(){
+      if (vids[idx] === v) next();
+    });
+    v.addEventListener('loadedmetadata', function(){
+      if (vids[idx] === v) armSafety(v);
+    });
+  });
+
+  playVideo(vids[0]);
+  armSafety(vids[0]);
+})();
+
+// Mensajes tipo Telegram subiendo de abajo hacia arriba (decorativo, casi ilegibles).
+(function(){
+  var layer = document.getElementById('tgChatLayer');
+  if (!layer) return;
+  var msgs = [
+    'Acabo de sacar un clip increíble 🔥',
+    'Ese momento del directo fue brutal',
+    'Ya salió el nuevo video',
+    '¿Alguien más usando la IA?',
+    'La transcripción queda perfecta',
+    'Jajaja no me esperaba eso',
+    'Subí 3 clips en 5 minutos',
+    'El editor es una locura',
+    'Gracias por el soporte 🙌',
+    '¿Cómo hago los subtítulos animados?',
+    'Esto funciona demasiado bien',
+    'Otro clip viral hecho ✅',
+    'Me encanta la comunidad aqui',
+    'Ya probé la nueva versión',
+    'El audio queda increíble',
+    'Quién más está en el directo?',
+    'Buenísimo el resultado',
+    'No puedo dejar de hacer clips 😂'
+  ];
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (var i = 0; i < 26; i++) {
+    var bubble = document.createElement('div');
+    bubble.className = 'tg-msg';
+    bubble.textContent = msgs[i % msgs.length];
+    bubble.style.left = (4 + Math.random() * 55) + '%';
+    bubble.style.animationDuration = (16 + Math.random() * 12).toFixed(2) + 's';
+    bubble.style.animationDelay = '-' + (Math.random() * 26).toFixed(2) + 's';
+    if (!reduced) layer.appendChild(bubble);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de administración — TurboxClipsPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css?v=7">
+</head>
+<body class="admin-body">
+
+<!-- ===== Login ===== -->
+<div class="admin-login" id="adminLogin" {% if authed %}hidden{% endif %}>
+  <form class="admin-login-card" id="adminLoginForm" action="/admin/login" method="post" data-animate="fade-up">
+    <div class="admin-login-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <h1>Panel de administración</h1>
+    <p>Ingresa tu contraseña de administrador para ver los registros de TurboxClipsPro.</p>
+    <label for="adminPassword">Contraseña</label>
+    <input type="password" id="adminPassword" autocomplete="current-password" placeholder="••••••••••••" required>
+    <div class="form-error{% if error == '1' %} show{% endif %}" id="adminError">{% if error == '1' %}Contraseña incorrecta{% endif %}</div>
+    <button type="submit" class="btn btn-primary btn-lg" id="adminLoginBtn">Entrar al panel</button>
+    <a href="/" class="admin-back">← Volver a la página principal</a>
+  </form>
+</div>
+
+<!-- ===== Panel ===== -->
+{% set verified_count = users|selectattr('is_verified')|list|length %}
+<div class="admin-panel" id="adminPanel" {% if not authed %}hidden{% endif %}>
+  <nav class="admin-nav">
+    <div class="admin-nav-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">🎬</span>
+        <span class="logo-text">Turbox<span class="logo-accent">Clips</span>Pro</span>
+      </a>
+      <div class="admin-nav-right">
+        <span class="admin-nav-tag">Panel de administración</span>
+        <form method="post" action="/admin/logout"><button type="submit" class="btn btn-ghost btn-sm" id="adminLogoutBtn">Cerrar sesión</button></form>
+      </div>
+    </div>
+  </nav>
+
+  <main class="admin-container">
+    <header class="admin-header" data-animate="fade-up">
+      <div>
+        <h1>Registros de usuarios</h1>
+        <p>Administra las cuentas creadas en tu página.</p>
+      </div>
+      <div class="admin-header-actions">
+        <button class="btn btn-ghost btn-sm" id="adminRefreshBtn">↻ Actualizar</button>
+        <a class="btn btn-primary btn-sm" href="/api/admin/export" download>↓ Exportar CSV</a>
+      </div>
+    </header>
+
+    <section class="admin-stats">
+      <div class="admin-stat" data-animate="fade-up" data-delay="0">
+        <span class="admin-stat-icon">👥</span>
+        <div><div class="admin-stat-value" id="statTotal">{{ users|length }}</div><div class="admin-stat-label">Registros totales</div></div>
+      </div>
+      <div class="admin-stat" data-animate="fade-up" data-delay="80">
+        <span class="admin-stat-icon">✅</span>
+        <div><div class="admin-stat-value" id="statVerified">{{ verified_count }}</div><div class="admin-stat-label">Verificados</div></div>
+      </div>
+      <div class="admin-stat" data-animate="fade-up" data-delay="160">
+        <span class="admin-stat-icon">⏳</span>
+        <div><div class="admin-stat-value" id="statPending">{{ users|length - verified_count }}</div><div class="admin-stat-label">Pendientes</div></div>
+      </div>
+    </section>
+
+    <section class="admin-table-card" data-animate="fade-up" data-delay="200">
+      <div class="admin-toolbar">
+        <input type="search" id="adminSearch" placeholder="Buscar por nombre o email..." autocomplete="off">
+        <span class="admin-count" id="adminCount">{{ users|length }} usuarios</span>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Email</th>
+              <th>País</th>
+              <th>Registro</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="usersBody">
+            {% for u in users %}
+            <tr data-id="{{ u.id }}">
+              <td>
+                <div class="admin-user-cell">
+                  <img class="admin-avatar" alt="" src="{{ u.avatar }}">
+                  <div>
+                    <strong>{{ ((u.first_name or '') ~ ' ' ~ (u.last_name or ''))|trim or 'Sin nombre' }}</strong>
+                    <small>#{{ u.id }}</small>
+                  </div>
+                </div>
+              </td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.country or '—' }}</td>
+              <td class="admin-date">{{ (u.created_at|replace('T',' '))[:16] if u.created_at else '—' }}</td>
+              <td><span class="admin-badge {{ 'ok' if u.is_verified else 'pending' }}">{{ 'Verificado' if u.is_verified else 'Pendiente' }}</span></td>
+              <td>
+                <div class="admin-actions">
+                  <form method="post" action="/admin/users/{{ u.id }}/verify"><button type="submit" class="btn btn-ghost btn-sm">{{ 'Desverificar' if u.is_verified else 'Verificar' }}</button></form>
+                  <form method="post" action="/admin/users/{{ u.id }}/delete" onsubmit="return confirm('¿Eliminar permanentemente esta cuenta?');"><button type="submit" class="btn btn-danger btn-sm">Eliminar</button></form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="admin-empty" id="adminEmpty" hidden>No hay usuarios que coincidan con la búsqueda.</div>
+    </section>
+  </main>
+</div>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/app.js?v=9"></script>
+<script src="/static/js/admin.js?v=9"></script>
+<script>
+// Si los scripts no cargaron (cache vieja), avisar en vez de no hacer nada
+(function () {
+  var form = document.getElementById('adminLoginForm');
+  var box = document.getElementById('adminError');
+  if (location.search.indexOf('error=1') !== -1 && box) {
+    box.textContent = 'Contraseña incorrecta';
+    box.classList.add('show');
+  }
+  if (window.__adminReady) return;
+  if (box) {
+    box.textContent = 'No se pudo cargar el panel. Recarga con Ctrl+F5 (Windows) o recarga forzada en el móvil.';
+    box.classList.add('show');
+  }
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (box) {
+        box.textContent = 'No se pudo cargar el panel. Recarga con Ctrl+F5 (Windows) o recarga forzada en el móvil.';
+        box.classList.add('show');
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

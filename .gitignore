@@ -1,0 +1,29 @@
+# Secretos
+.env
+backend/.env
+*.env.local
+
+# Base de datos local (contiene datos reales de usuarios)
+*.db
+*.sqlite
+*.sqlite3
+
+# Ejecutable grande: se sube a GitHub Releases, no al repo
+downloads/*.exe
+*.exe
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+
+# Editores / sistema
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,7 @@
+﻿MODO: TAILSCALE (privado, link fijo)
+
+URL DEL PANEL
+https://desktop-njc6rgs.tail2da6fd.ts.net/admin
+
+Contrasena: la configurada en .env (ADMIN_PASSWORD)
+

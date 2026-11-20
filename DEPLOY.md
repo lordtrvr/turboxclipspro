@@ -1,38 +1,38 @@
-# TurboxClipsPro â€” GuÃ­a de publicaciÃ³n 24/7 (sin PC)
+# TurboxClipsPro — Guía de publicación 24/7 (sin PC)
 
 ## Arquitectura
 
-| Parte | Servicio gratuito | QuÃ© hace |
+| Parte | Servicio gratuito | Qué hace |
 |-------|------------------|----------|
-| PÃ¡gina web | **Netlify** | HTML/CSS/JS (landing, registro, login, dashboard) |
-| Backend + API | **Render** | FastAPI: registro, verificaciÃ³n, login, admin |
+| Página web | **Netlify** | HTML/CSS/JS (landing, registro, login, dashboard) |
+| Backend + API | **Render** | FastAPI: registro, verificación, login, admin |
 | Base de datos | **Neon** | PostgreSQL gratis (persistente) |
-| Instalador `.exe` | **GitHub Releases** | Archivo de 107 MB, descarga pÃºblica |
+| Instalador `.exe` | **GitHub Releases** | Archivo de 107 MB, descarga pública |
 
 > Render gratis se duerme tras ~15 min sin uso y "despierta" en ~30 s al recibir una visita.
-> Si quieres que despierte al instante, puedes aÃ±adir un monitor gratuito (UptimeRobot, cada 5 min).
+> Si quieres que despierte al instante, puedes añadir un monitor gratuito (UptimeRobot, cada 5 min).
 
 ---
 
-## Paso 1 â€” GitHub ( cuenta + repositorio )
+## Paso 1 — GitHub ( cuenta + repositorio )
 
 1. Ir a https://github.com/signup y crear cuenta con tu email.
 2. Verificar el email.
-3. Crear repositorio **pÃºblico** llamado `turboxclipspro`.
+3. Crear repositorio **público** llamado `turboxclipspro`.
 4. No marcar "Initialize with README".
 
 ---
 
-## Paso 2 â€” Neon ( base de datos )
+## Paso 2 — Neon ( base de datos )
 
-1. Ir a https://neon.tech y registrarse con GitHub (botÃ³n "Continue with GitHub").
-2. Crear un proyecto: nombre `turboxclipspro`, regiÃ³n la mÃ¡s cercana.
+1. Ir a https://neon.tech y registrarse con GitHub (botón "Continue with GitHub").
+2. Crear un proyecto: nombre `turboxclipspro`, región la más cercana.
 3. Copiar la **connection string** ( parece `postgresql://neondb_owner:...@ep-xxx.region.aws.neon.tech/neondb?sslmode=require` ).
-4. Guardarla, se usarÃ¡ como `DATABASE_URL`.
+4. Guardarla, se usará como `DATABASE_URL`.
 
 ---
 
-## Paso 3 â€” Subir el cÃ³digo y el .exe
+## Paso 3 — Subir el código y el .exe
 
 Desde la carpeta del proyecto:
 
@@ -60,7 +60,7 @@ SHA256 verificado: `BD777647A2621E52F413230EEC410920D179FC9957CBA2BC3D35681EF927
 
 ---
 
-## Paso 4 â€” Migrar los usuarios actuales
+## Paso 4 — Migrar los usuarios actuales
 
 ```powershell
 $env:DATABASE_URL = "postgresql://...copiado de Neon..."
@@ -69,16 +69,16 @@ python backend/migrate_to_postgres.py
 
 ---
 
-## Paso 5 â€” Render ( backend )
+## Paso 5 — Render ( backend )
 
 1. Ir a https://render.com y registrarse con GitHub.
-2. **New â†’ Web Service** â†’ conectar el repo `turboxclipspro`.
-3. ConfiguraciÃ³n:
+2. **New → Web Service** → conectar el repo `turboxclipspro`.
+3. Configuración:
    - Runtime: `Python 3`
    - Build Command: `pip install -r backend/requirements.txt`
    - Start Command: `python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
    - Plan: Free
-4. En **Environment Variables** aÃ±adir:
+4. En **Environment Variables** añadir:
 
 | Variable | Valor |
 |----------|-------|
@@ -87,32 +87,32 @@ python backend/migrate_to_postgres.py
 | `SMTP_HOST` | `smtp.gmail.com` |
 | `SMTP_PORT` | `587` |
 | `SMTP_USER` | `turboxclips@gmail.com` |
-| `SMTP_PASS` | contraseÃ±a de aplicaciÃ³n de Gmail |
+| `SMTP_PASS` | contraseña de aplicación de Gmail |
 | `SMTP_FROM` | `TurboxClipsPro <turboxclips@gmail.com>` |
 | `APP_NAME` | `TurboxClipsPro` |
 | `APP_URL` | URL de Render (se completa tras el deploy) |
 | `DOWNLOAD_URL` | URL del `.exe` en GitHub Releases |
 | `ADMIN_WHATSAPP` | `18293670355` |
-| `ADMIN_PASSWORD` | contraseÃ±a del panel |
+| `ADMIN_PASSWORD` | contraseña del panel |
 | `ADMIN_ACCESS_KEY` | clave del enlace directo |
 | `FRONTEND_URL` | URL de Netlify (se completa tras el deploy) |
 
-5. Crear el servicio. Copiar la URL pÃºblica (`https://turboxclipspro-api.onrender.com`).
+5. Crear el servicio. Copiar la URL pública (`https://turboxclipspro-api.onrender.com`).
 
 ---
 
-## Paso 6 â€” Netlify ( frontend )
+## Paso 6 — Netlify ( frontend )
 
-OpciÃ³n A â€” desde GitHub:
+Opción A — desde GitHub:
 1. Ir a https://netlify.com y registrarse con GitHub.
-2. **Add new site â†’ Import an existing project** â†’ elegir el repo.
+2. **Add new site → Import an existing project** → elegir el repo.
 3. Build settings:
-   - Base directory: (vacÃ­o)
-   - Build command: (vacÃ­o)
+   - Base directory: (vacío)
+   - Build command: (vacío)
    - Publish directory: `frontend`
 4. Deploy.
 
-OpciÃ³n B â€” Netlify CLI:
+Opción B — Netlify CLI:
 ```powershell
 npm i -g netlify-cli
 netlify login
@@ -122,7 +122,7 @@ netlify deploy --prod
 
 ---
 
-## Paso 7 â€” Conectar frontend con backend
+## Paso 7 — Conectar frontend con backend
 
 Editar `frontend/js/config.js`:
 
@@ -137,13 +137,13 @@ URLs reales:
 - Admin: https://turboxclipspro-api.onrender.com/admin?key=YuhrXmPsfM9kPqg3BKxYhjWf2S8NFfrlEoIuDKsm
 
 Hacer commit y push. Netlify y Render se actualizan solos.
-Actualizar tambiÃ©n `FRONTEND_URL` y `APP_URL` en Render con las URLs reales.
+Actualizar también `FRONTEND_URL` y `APP_URL` en Render con las URLs reales.
 
 ---
 
-## RevocaciÃ³n remota del `.exe`
+## Revocación remota del `.exe`
 
-El ejecutable consulta una lista pÃºblica de IDs de licencias revocadas al abrirse y luego cada 5 minutos:
+El ejecutable consulta una lista pública de IDs de licencias revocadas al abrirse y luego cada 5 minutos:
 
 ```
 https://raw.githubusercontent.com/lordtrvr/turboxclipspro-revoked/main/revoked.json
@@ -153,16 +153,16 @@ Para revocar una licencia:
 
 1. En la app de administrador, abrir **Administrador** y marcar la key como revocada (esto escribe `owner/revoked.json`).
 2. Copiar ese contenido a `revoked.json` en https://github.com/lordtrvr/turboxclipspro-revoked (editar el archivo desde GitHub).
-3. La key deja de funcionar al reabrir la app, o en un mÃ¡ximo de 5 minutos si estaba abierta.
+3. La key deja de funcionar al reabrir la app, o en un máximo de 5 minutos si estaba abierta.
 
-> El repo de revocaciÃ³n es pÃºblico y gratuito. No hace falta republish el `.exe` para revocar: solo se actualiza ese JSON.
+> El repo de revocación es público y gratuito. No hace falta republish el `.exe` para revocar: solo se actualiza ese JSON.
 
 ---
 
-## Paso 8 â€” Probar
+## Paso 8 — Probar
 
-- https://TU-SITIO.netlify.app â†’ landing
-- Registro con email real â†’ llega el cÃ³digo
-- Verificar â†’ dashboard
-- BotÃ³n descargar â†’ baja el `.exe`
-- `https://TU-API.onrender.com/admin?key=CLAVE` â†’ panel de administraciÃ³n
+- https://TU-SITIO.netlify.app → landing
+- Registro con email real → llega el código
+- Verificar → dashboard
+- Botón descargar → baja el `.exe`
+- `https://TU-API.onrender.com/admin?key=CLAVE` → panel de administración

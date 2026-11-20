@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     SMTP_PASS: Optional[str] = None
     SMTP_FROM: Optional[str] = None
 
+    # Resend (API HTTP - funciona en Render free; SMTP está bloqueado)
+    RESEND_API_KEY: Optional[str] = None
+    RESEND_FROM: Optional[str] = None
+
     APP_NAME: str = "TurboxClipsPro"
     APP_URL: str = "http://localhost:8000"
     DOWNLOAD_URL: str = "/downloads/TurboxClipsPro.exe"

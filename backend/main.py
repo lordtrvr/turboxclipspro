@@ -161,8 +161,18 @@ async def register(
     birth_date: str = Form(...),
     db: Session = Depends(get_db),
 ):
-    if db.query(User).filter(User.email == email).first():
-        raise HTTPException(status_code=400, detail="El email ya está registrado")
+    existing = db.query(User).filter(User.email == email).first()
+    if existing:
+        if existing.is_verified:
+            raise HTTPException(status_code=400, detail="El email ya está registrado y verificado. Inicia sesión.")
+        # Cuenta pendiente de verificar (p. ej. el email anterior no llegó):
+        # generar y reenviar un código nuevo en lugar de bloquear el registro.
+        code = generate_verification_code()
+        existing.verification_code = code
+        existing.code_expires_at = code_expiry()
+        db.commit()
+        await send_verification_email(existing.email, code, existing.first_name)
+        return {"message": "Revisa tu email para el código de verificación.", "email": email}
 
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="La contraseña debe tener al menos 6 caracteres")
